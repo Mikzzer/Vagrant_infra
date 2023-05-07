@@ -4,20 +4,8 @@
   tasks:
   - name: Instlacja dockera
     yum:
-      name: docker.ce
+      name: docker
       state: latest
       update_cache: yes
   - name: Instalacja docker-compose
-    yum:
-      name: docker-compose
-      state: latest
-      update_cache: yes
-  - name: Dodanie do dnsow w hostah
-    lineinfile:
-      path: /etc/hosts
-      insertafter: EOF
-      line: "{{ item }}"
-    loop:
-        - '172.16.1.50 control'
-        - '172.16.1.51 node1'
-        - '172.16.1.52 node2'
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
