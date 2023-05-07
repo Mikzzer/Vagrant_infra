@@ -1,0 +1,23 @@
+## Dodawanieinstalacja dockera  i dodanie wpisow do dnsow!##
+- hosts: nodes
+  become: yes
+  tasks:
+  - name: Instlacja dockera
+    yum:
+      name: docker.ce
+      state: latest
+      update_cache: yes
+  - name: Instalacja docker-compose
+    yum:
+      name: docker-compose
+      state: latest
+      update_cache: yes
+  - name: Dodanie do dnsow w hostah
+    lineinfile:
+      path: /etc/hosts
+      insertafter: EOF
+      line: "{{ item }}"
+    loop:
+        - '172.16.1.50 control'
+        - '172.16.1.51 node1'
+        - '172.16.1.52 node2'
